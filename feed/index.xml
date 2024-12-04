@@ -9,8 +9,8 @@
 
 <channel>
 	<title>LinkUp</title>
-	<atom:link href="C:/laragon/www/LinkUp/feed/" rel="self" type="application/rss+xml" />
-	<link>C:/laragon/www/LinkUp</link>
+	<atom:link href="/linkup/feed/" rel="self" type="application/rss+xml" />
+	<link>/linkup</link>
 	<description></description>
 	<lastBuildDate>Mon, 02 Dec 2024 22:26:31 +0000</lastBuildDate>
 	<language>es</language>
@@ -21,13 +21,13 @@
 	<generator>https://wordpress.org/?v=6.7.1</generator>
 	<item>
 		<title>Hola Mundo</title>
-		<link>C:/laragon/www/LinkUp/2024/12/02/hola-mundo-2/</link>
-					<comments>C:/laragon/www/LinkUp/2024/12/02/hola-mundo-2/#respond</comments>
+		<link>/linkup/2024/12/02/hola-mundo-2/</link>
+					<comments>/linkup/2024/12/02/hola-mundo-2/#respond</comments>
 		
 		<dc:creator><![CDATA[ana]]></dc:creator>
 		<pubDate>Mon, 02 Dec 2024 22:26:31 +0000</pubDate>
 				<category><![CDATA[Sin categoría]]></category>
-		<guid isPermaLink="false">C:/laragon/www/LinkUp/?p=139</guid>
+		<guid isPermaLink="false">/linkup/?p=139</guid>
 
 					<description><![CDATA[El siguiente código muestra un mensaje en PHP &#8220;Hola Mundo&#8221;]]></description>
 										<content:encoded><![CDATA[
@@ -52,20 +52,20 @@
 <p></p>
 ]]></content:encoded>
 					
-					<wfw:commentRss>C:/laragon/www/LinkUp/2024/12/02/hola-mundo-2/feed/</wfw:commentRss>
+					<wfw:commentRss>/linkup/2024/12/02/hola-mundo-2/feed/</wfw:commentRss>
 			<slash:comments>0</slash:comments>
 		
 		
 			</item>
 		<item>
 		<title>Agenda de Tareas</title>
-		<link>C:/laragon/www/LinkUp/2024/12/02/agenda-de-tareas/</link>
-					<comments>C:/laragon/www/LinkUp/2024/12/02/agenda-de-tareas/#respond</comments>
+		<link>/linkup/2024/12/02/agenda-de-tareas/</link>
+					<comments>/linkup/2024/12/02/agenda-de-tareas/#respond</comments>
 		
 		<dc:creator><![CDATA[ana]]></dc:creator>
 		<pubDate>Mon, 02 Dec 2024 22:24:34 +0000</pubDate>
 				<category><![CDATA[Sin categoría]]></category>
-		<guid isPermaLink="false">C:/laragon/www/LinkUp/?p=136</guid>
+		<guid isPermaLink="false">/linkup/?p=136</guid>
 
 					<description><![CDATA[El siguiente código constituye diferentes archivos que construyen un proyecto de una agenda de tareas, este esta construido en PHP categoria.php conexion.php enlistar.php index.php indexCategoria.php indexResponsable.php indexTareas.php responsable.php tareas.php]]></description>
 										<content:encoded><![CDATA[
@@ -897,20 +897,20 @@ if (isset($_GET['eliminar'])) {
 ?> </pre>
 ]]></content:encoded>
 					
-					<wfw:commentRss>C:/laragon/www/LinkUp/2024/12/02/agenda-de-tareas/feed/</wfw:commentRss>
+					<wfw:commentRss>/linkup/2024/12/02/agenda-de-tareas/feed/</wfw:commentRss>
 			<slash:comments>0</slash:comments>
 		
 		
 			</item>
 		<item>
 		<title>Agenda de Contactos</title>
-		<link>C:/laragon/www/LinkUp/2024/12/02/agenda-de-contactos/</link>
-					<comments>C:/laragon/www/LinkUp/2024/12/02/agenda-de-contactos/#respond</comments>
+		<link>/linkup/2024/12/02/agenda-de-contactos/</link>
+					<comments>/linkup/2024/12/02/agenda-de-contactos/#respond</comments>
 		
 		<dc:creator><![CDATA[ana]]></dc:creator>
 		<pubDate>Mon, 02 Dec 2024 22:17:25 +0000</pubDate>
 				<category><![CDATA[Sin categoría]]></category>
-		<guid isPermaLink="false">C:/laragon/www/LinkUp/?p=133</guid>
+		<guid isPermaLink="false">/linkup/?p=133</guid>
 
 					<description><![CDATA[El siguiente código trata sobre un proyecto de diferentes archivos escritos en PHP que construyen un proyecto para una agenda de Contactos. conexion.php insertar.php consulta.php enlistar.php consulta.php registrar.php index.php estilo.css]]></description>
 										<content:encoded><![CDATA[
@@ -1570,20 +1570,20 @@ html,body
 <p></p>
 ]]></content:encoded>
 					
-					<wfw:commentRss>C:/laragon/www/LinkUp/2024/12/02/agenda-de-contactos/feed/</wfw:commentRss>
+					<wfw:commentRss>/linkup/2024/12/02/agenda-de-contactos/feed/</wfw:commentRss>
 			<slash:comments>0</slash:comments>
 		
 		
 			</item>
 		<item>
 		<title>Herencia y Conexión MySQL</title>
-		<link>C:/laragon/www/LinkUp/2024/12/02/herencia-y-conexion-mysql/</link>
-					<comments>C:/laragon/www/LinkUp/2024/12/02/herencia-y-conexion-mysql/#respond</comments>
+		<link>/linkup/2024/12/02/herencia-y-conexion-mysql/</link>
+					<comments>/linkup/2024/12/02/herencia-y-conexion-mysql/#respond</comments>
 		
 		<dc:creator><![CDATA[ana]]></dc:creator>
 		<pubDate>Mon, 02 Dec 2024 22:10:14 +0000</pubDate>
 				<category><![CDATA[Sin categoría]]></category>
-		<guid isPermaLink="false">C:/laragon/www/LinkUp/?p=130</guid>
+		<guid isPermaLink="false">/linkup/?p=130</guid>
 
 					<description><![CDATA[El siguiente código es el ejemplo de una conexión con MySQL y haciendo uso de la programación orientada a objetos. conexion.php index.php insertar.php maestros.php alumnos.php]]></description>
 										<content:encoded><![CDATA[
@@ -1742,20 +1742,20 @@ class Alumnos{
 ?></pre>
 ]]></content:encoded>
 					
-					<wfw:commentRss>C:/laragon/www/LinkUp/2024/12/02/herencia-y-conexion-mysql/feed/</wfw:commentRss>
+					<wfw:commentRss>/linkup/2024/12/02/herencia-y-conexion-mysql/feed/</wfw:commentRss>
 			<slash:comments>0</slash:comments>
 		
 		
 			</item>
 		<item>
 		<title>Conexión Base de Datos PDO</title>
-		<link>C:/laragon/www/LinkUp/2024/12/02/conexion-base-de-datos-pdo/</link>
-					<comments>C:/laragon/www/LinkUp/2024/12/02/conexion-base-de-datos-pdo/#respond</comments>
+		<link>/linkup/2024/12/02/conexion-base-de-datos-pdo/</link>
+					<comments>/linkup/2024/12/02/conexion-base-de-datos-pdo/#respond</comments>
 		
 		<dc:creator><![CDATA[ana]]></dc:creator>
 		<pubDate>Mon, 02 Dec 2024 22:01:02 +0000</pubDate>
 				<category><![CDATA[Sin categoría]]></category>
-		<guid isPermaLink="false">C:/laragon/www/LinkUp/?p=127</guid>
+		<guid isPermaLink="false">/linkup/?p=127</guid>
 
 					<description><![CDATA[El siguiente código esta separado por archivos, y este sirve para hacer una inserción de datos a una bade de datos con una conexión PDO en PHP. index.php indexPDO.php insertarPDO.php estilos.css]]></description>
 										<content:encoded><![CDATA[
@@ -1980,20 +1980,20 @@ button:hover {
 </pre>
 ]]></content:encoded>
 					
-					<wfw:commentRss>C:/laragon/www/LinkUp/2024/12/02/conexion-base-de-datos-pdo/feed/</wfw:commentRss>
+					<wfw:commentRss>/linkup/2024/12/02/conexion-base-de-datos-pdo/feed/</wfw:commentRss>
 			<slash:comments>0</slash:comments>
 		
 		
 			</item>
 		<item>
 		<title>Conexión DB PHP</title>
-		<link>C:/laragon/www/LinkUp/2024/12/02/hola-mundo/</link>
-					<comments>C:/laragon/www/LinkUp/2024/12/02/hola-mundo/#comments</comments>
+		<link>/linkup/2024/12/02/hola-mundo/</link>
+					<comments>/linkup/2024/12/02/hola-mundo/#comments</comments>
 		
 		<dc:creator><![CDATA[ana]]></dc:creator>
 		<pubDate>Mon, 02 Dec 2024 16:21:22 +0000</pubDate>
 				<category><![CDATA[Sin categoría]]></category>
-		<guid isPermaLink="false">C:/laragon/www/LinkUp/?p=1</guid>
+		<guid isPermaLink="false">/linkup/?p=1</guid>
 
 					<description><![CDATA[El siguiente código sirve para hacer una conexión a una base de datos en PHP]]></description>
 										<content:encoded><![CDATA[
@@ -2187,7 +2187,7 @@ border:1px solid #ccc !important;
    }</pre>
 ]]></content:encoded>
 					
-					<wfw:commentRss>C:/laragon/www/LinkUp/2024/12/02/hola-mundo/feed/</wfw:commentRss>
+					<wfw:commentRss>/linkup/2024/12/02/hola-mundo/feed/</wfw:commentRss>
 			<slash:comments>1</slash:comments>
 		
 		

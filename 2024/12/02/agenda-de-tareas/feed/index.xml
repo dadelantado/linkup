@@ -8,8 +8,8 @@
 <channel>
 	<title>
 	Comentarios en: Agenda de Tareas	</title>
-	<atom:link href="C:/laragon/www/LinkUp/2024/12/02/agenda-de-tareas/feed/" rel="self" type="application/rss+xml" />
-	<link>C:/laragon/www/LinkUp/2024/12/02/agenda-de-tareas/</link>
+	<atom:link href="/linkup/2024/12/02/agenda-de-tareas/feed/" rel="self" type="application/rss+xml" />
+	<link>/linkup/2024/12/02/agenda-de-tareas/</link>
 	<description></description>
 	<lastBuildDate>Mon, 02 Dec 2024 22:24:34 +0000</lastBuildDate>
 	<sy:updatePeriod>
