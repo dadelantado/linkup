@@ -1,0 +1,2196 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>LinkUp</title>
+	<atom:link href="C:/laragon/www/LinkUp/feed/" rel="self" type="application/rss+xml" />
+	<link>C:/laragon/www/LinkUp</link>
+	<description></description>
+	<lastBuildDate>Mon, 02 Dec 2024 22:26:31 +0000</lastBuildDate>
+	<language>es</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.7.1</generator>
+	<item>
+		<title>Hola Mundo</title>
+		<link>C:/laragon/www/LinkUp/2024/12/02/hola-mundo-2/</link>
+					<comments>C:/laragon/www/LinkUp/2024/12/02/hola-mundo-2/#respond</comments>
+		
+		<dc:creator><![CDATA[ana]]></dc:creator>
+		<pubDate>Mon, 02 Dec 2024 22:26:31 +0000</pubDate>
+				<category><![CDATA[Sin categoría]]></category>
+		<guid isPermaLink="false">C:/laragon/www/LinkUp/?p=139</guid>
+
+					<description><![CDATA[El siguiente código muestra un mensaje en PHP &#8220;Hola Mundo&#8221;]]></description>
+										<content:encoded><![CDATA[
+<p>El siguiente código muestra un mensaje en PHP &#8220;Hola Mundo&#8221;</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="php" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">&lt;!DOCTYPE html>
+&lt;html lang="en">
+&lt;head>
+    &lt;meta charset="UTF-8">
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0">
+    &lt;title>Document&lt;/title>
+&lt;/head>
+&lt;body>
+    &lt;?php echo '&lt;p> Hola Mundo &lt;/p>'; ?>
+&lt;/body>
+&lt;/html></pre>
+
+
+
+<p></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>C:/laragon/www/LinkUp/2024/12/02/hola-mundo-2/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Agenda de Tareas</title>
+		<link>C:/laragon/www/LinkUp/2024/12/02/agenda-de-tareas/</link>
+					<comments>C:/laragon/www/LinkUp/2024/12/02/agenda-de-tareas/#respond</comments>
+		
+		<dc:creator><![CDATA[ana]]></dc:creator>
+		<pubDate>Mon, 02 Dec 2024 22:24:34 +0000</pubDate>
+				<category><![CDATA[Sin categoría]]></category>
+		<guid isPermaLink="false">C:/laragon/www/LinkUp/?p=136</guid>
+
+					<description><![CDATA[El siguiente código constituye diferentes archivos que construyen un proyecto de una agenda de tareas, este esta construido en PHP categoria.php conexion.php enlistar.php index.php indexCategoria.php indexResponsable.php indexTareas.php responsable.php tareas.php]]></description>
+										<content:encoded><![CDATA[
+<p>El siguiente código constituye diferentes archivos que construyen un proyecto de una agenda de tareas, este esta construido en PHP</p>
+
+
+
+<p>categoria.php</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="php" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">&lt;?php
+include 'conexion.php';
+
+// Crear o actualizar categoría
+if (isset($_POST['guardar_categoria'])) {
+    $idcategoria = $_POST['idcategoria'] ?? null;
+    $nombre = $_POST['nombre'];
+
+    if ($idcategoria) {  // Actualizar categoría
+        $query = "UPDATE categoria SET nombre = :nombre WHERE idcategoria = :idcategoria";
+        $stmt = $conn->prepare($query);
+        $stmt->execute([':nombre' => $nombre, ':idcategoria' => $idcategoria]);
+    } else {  // Crear nueva categoría
+        $query = "INSERT INTO categoria (nombre) VALUES (:nombre)";
+        $stmt = $conn->prepare($query);
+        $stmt->execute([':nombre' => $nombre]);
+    }
+    header("Location: indexCategoria.php");
+    exit;
+}
+
+// Eliminar categoría
+if (isset($_GET['eliminar'])) {
+    $idcategoria = $_GET['eliminar'];
+    $query = "DELETE FROM categoria WHERE idcategoria = :idcategoria";
+    $stmt = $conn->prepare($query);
+    $stmt->execute([':idcategoria' => $idcategoria]);
+    header("Location: indexCategoria.php");
+    exit;
+}
+
+// Listar categorías
+$query = "SELECT * FROM categoria";
+$stmt = $conn->query($query);
+$categorias = $stmt->fetchAll(PDO::FETCH_ASSOC);
+?></pre>
+
+
+
+<p>conexion.php</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="php" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">&lt;?php
+$host = "localhost";
+$user = "root";
+$password = "";
+$dbname = "tareas_db";
+
+try{
+    $conn = new PDO("mysql:host =$host;dbname=$dbname;charset=utf8", $user, $password);
+
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    error_log( "Conexion exitosa");
+
+}catch (PDOException $e){
+    die("Conexion fallida " . $e->getMessage());
+}
+
+?></pre>
+
+
+
+<p>enlistar.php</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="php" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">&lt;?php
+// Filtrar por estado y responsable
+$estado = isset($_GET['estado']) ? $_GET['estado'] : '';
+$nombre_responsable = isset($_GET['nombre_responsable']) ? $_GET['nombre_responsable'] : '';
+
+$query = "SELECT tareas.*, categoria.nombre AS nombre_categoria, responsable.nombre AS nombre_responsable
+          FROM tareas
+          JOIN categoria ON tareas.idcategoria = categoria.idcategoria
+          JOIN responsable ON tareas.idresponsable = responsable.idresponsable
+          WHERE 1=1";
+$params = [];
+
+if ($estado != '') {
+    $query .= " AND tareas.estado = :estado";
+    $params[':estado'] = $estado;
+}
+if ($nombre_responsable != '') {
+    $query .= " AND responsable.nombre LIKE :nombre_responsable";
+    $params[':nombre_responsable'] = "%$nombre_responsable%";
+}
+
+$stmt = $conn->prepare($query);
+$stmt->execute($params);
+$tareas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+?>
+</pre>
+
+
+
+<p>index.php</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="php" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">&lt;!DOCTYPE html>
+&lt;html lang="es">
+&lt;head>
+    &lt;meta charset="UTF-8">
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0">
+    &lt;title>Gestión de Tareas&lt;/title>
+    &lt;style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            margin: 10px;
+            background-color: #6a1b9a;
+            color: white;
+            font-size: 18px;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #DDA0DD;
+        }
+
+        .btn:focus {
+            outline: none;
+        }
+    &lt;/style>
+&lt;/head>
+&lt;body>
+
+&lt;div class="container">
+    &lt;h2>Bienvenido al Sistema de Gestión de Tareas&lt;/h2>
+    &lt;a href="indexTareas.php" class="btn">Tareas&lt;/a>
+    &lt;a href="indexCategoria.php" class="btn">Categorías&lt;/a>
+    &lt;a href="indexResponsable.php" class="btn">Responsables&lt;/a>
+&lt;/div>
+
+&lt;/body>
+&lt;/html>
+</pre>
+
+
+
+<p>indexCategoria.php</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="php" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">&lt;?php
+include 'categoria.php';
+?>
+
+&lt;!DOCTYPE html>
+&lt;html lang="es">
+&lt;head>
+    &lt;meta charset="UTF-8">
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0">
+    &lt;title>Gestión de Categorías&lt;/title>
+    &lt;style>
+      body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 800px;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        form {
+            display: grid;
+            gap: 10px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        input {
+            padding: 8px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #6a1b9a; /* Color morado */
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #DDA0DD; 
+        }
+
+        table {
+            width: 100%;
+            margin-top: 30px;
+            border-collapse: collapse;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        td a {
+            color: #0275d8;
+            text-decoration: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            background-color: #d9edf7;
+        }
+
+        td a:hover {
+            background-color: #c1e0f7;
+        }
+
+        .btn {
+            background-color: #6a1b9a;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .btn:hover {
+            background-color: #DDA0DD;
+        }	
+    &lt;/style>
+&lt;/head>
+&lt;body>
+
+    &lt;!-- Botón de Inicio -->
+   
+&lt;div class="container">
+&lt;a href="index.php" class="btn">Inicio&lt;/a>
+    &lt;h2>Gestión de Categorías&lt;/h2>
+
+    &lt;!-- Formulario para crear o editar categoría -->
+    &lt;form action="indexCategoria.php" method="post">
+        &lt;input type="hidden" name="idcategoria" value="&lt;?= $categoria['idcategoria'] ?? '' ?>">
+        &lt;label>Nombre de la Categoría:&lt;/label>
+        &lt;input type="text" name="nombre" required value="&lt;?= $categoria['nombre'] ?? '' ?>">&lt;br>
+        &lt;button type="submit" name="guardar_categoria">&lt;?= isset($categoria) ? 'Actualizar' : 'Agregar' ?> Categoría&lt;/button>
+    &lt;/form>
+
+    &lt;!-- Tabla para listar categorías -->
+    &lt;table>
+        &lt;thead>
+            &lt;tr>
+                &lt;th>Nombre&lt;/th>
+                &lt;th>Acciones&lt;/th>
+            &lt;/tr>
+        &lt;/thead>
+        &lt;tbody>
+            &lt;?php foreach ($categorias as $categoria): ?>
+                &lt;tr>
+                    &lt;td>&lt;?= $categoria['nombre'] ?>&lt;/td>
+                    &lt;td>
+                        &lt;a href="indexCategoria.php?editar=&lt;?= $categoria['idcategoria'] ?>">Editar&lt;/a>
+                        &lt;a href="indexCategoria.php?eliminar=&lt;?= $categoria['idcategoria'] ?>" onclick="return confirm('¿Está seguro de eliminar esta categoría?')">Eliminar&lt;/a>
+                    &lt;/td>
+                &lt;/tr>
+            &lt;?php endforeach; ?>
+        &lt;/tbody>
+    &lt;/table>
+&lt;/div>
+
+&lt;/body>
+&lt;/html></pre>
+
+
+
+<p>indexResponsable.php</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="php" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">&lt;?php
+include 'responsable.php';
+?>
+
+&lt;!DOCTYPE html>
+&lt;html lang="es">
+&lt;head>
+    &lt;meta charset="UTF-8">
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0">
+    &lt;title>Gestión de Responsables&lt;/title>
+    &lt;style>
+      body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 800px;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        form {
+            display: grid;
+            gap: 10px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        input {
+            padding: 8px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #6a1b9a; /* Color morado */
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #DDA0DD; /* Morado mÃ¡s oscuro */
+        }
+
+        table {
+            width: 100%;
+            margin-top: 30px;
+            border-collapse: collapse;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        td a {
+            color: #0275d8;
+            text-decoration: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            background-color: #d9edf7;
+        }
+
+        td a:hover {
+            background-color: #c1e0f7;
+        }
+
+        .btn {
+            background-color: #6a1b9a;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .btn:hover {
+            background-color: #DDA0DD;
+        }
+    &lt;/style>
+&lt;/head>
+&lt;body>
+
+&lt;div class="container">
+&lt;a href="index.php" class="btn">Inicio&lt;/a>
+    &lt;h2>Gestión de Responsables&lt;/h2>
+
+    &lt;!-- Formulario para crear o editar responsable -->
+    &lt;form action="indexResponsable.php" method="post">
+        &lt;input type="hidden" name="idresponsable" value="&lt;?= $responsable['idresponsable'] ?? '' ?>">
+        &lt;label>Nombre:&lt;/label>
+        &lt;input type="text" name="nombre" required value="&lt;?= $responsable['nombre'] ?? '' ?>">&lt;br>
+
+        &lt;label>Whatsapp:&lt;/label>
+        &lt;input type="number" name="whatsapp" pattern="\d+" value="&lt;?= $responsable['whatsapp'] ?? '' ?>">&lt;br>
+
+        &lt;label>Departamento:&lt;/label>
+        &lt;input type="text" name="depto" value="&lt;?= $responsable['depto'] ?? '' ?>">&lt;br>
+
+        &lt;button type="submit" name="guardar_responsable">&lt;?= isset($responsable) ? 'Actualizar' : 'Agregar' ?> Responsable&lt;/button>
+    &lt;/form>
+
+    &lt;!-- Tabla para listar responsables -->
+    &lt;table>
+        &lt;thead>
+            &lt;tr>
+                &lt;th>Nombre&lt;/th>
+                &lt;th>Whatsapp&lt;/th>
+                &lt;th>Departamento&lt;/th>
+                &lt;th>Acciones&lt;/th>
+            &lt;/tr>
+        &lt;/thead>
+        &lt;tbody>
+            &lt;?php foreach ($responsables as $responsable): ?>
+                &lt;tr>
+                    &lt;td>&lt;?= $responsable['nombre'] ?>&lt;/td>
+                    &lt;td>&lt;?= $responsable['whatsapp'] ?>&lt;/td>
+                    &lt;td>&lt;?= $responsable['depto'] ?>&lt;/td>
+                    &lt;td>
+                        &lt;a href="indexResponsable.php?editar=&lt;?= $responsable['idresponsable'] ?>">Editar&lt;/a>
+                        &lt;a href="indexResponsable.php?eliminar=&lt;?= $responsable['idresponsable'] ?>" onclick="return confirm('¿Está seguro de eliminar este responsable?')">Eliminar&lt;/a>
+                    &lt;/td>
+                &lt;/tr>
+            &lt;?php endforeach; ?>
+        &lt;/tbody>
+    &lt;/table>
+&lt;/div>
+
+&lt;/body>
+&lt;/html>
+</pre>
+
+
+
+<p>indexTareas.php</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="php" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">&lt;?php
+include "tareas.php";
+include "enlistar.php";
+    ?>
+&lt;!DOCTYPE html>
+&lt;html lang="es">
+&lt;head>
+    &lt;meta charset="UTF-8">
+    &lt;title>Gestión de Tareas&lt;/title>
+    &lt;style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #e8e7f7; /* Color de fondo morado claro */
+        }
+
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 1000px;
+        }
+
+        h2 {
+            color: #5e2a8c; /* Color morado */
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            margin: 10px;
+            background-color: #6a1b9a; /* Color morado */
+            color: white;
+            font-size: 18px;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #DDA0DD;
+        }
+
+        .btn:focus {
+            outline: none;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #6a1b9a; /* Color morado */
+            color: white;
+        }
+
+        a {
+            text-decoration: none;
+            color: #0275d8;
+            padding: 4px 8px;
+            border-radius: 4px;
+            background-color: #d9edf7;
+        }
+
+        a:hover {
+            background-color: #c1e0f7;
+        }
+
+
+        button[type="submit"] {
+            background-color: #6a1b9a; /* Morado */
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            border-radius: 4px;
+        }
+
+        button[type="submit"]:hover {
+            
+            background-color: #DDA0DD;
+        
+        }
+    &lt;/style>
+&lt;/head>
+&lt;body>
+&lt;div class="container">
+    &lt;!-- Botón de Inicio -->
+    &lt;a href="index.php" class="btn">Inicio&lt;/a>
+    &lt;h2>Gestión de Tareas&lt;/h2>
+ 
+
+    &lt;!-- Formulario CRUD -->
+    &lt;form action="tareas.php" method="post">
+        &lt;input type="hidden" name="idtarea" value="&lt;?= $tarea_editar['idtarea'] ?? '' ?>">
+        &lt;label>Nombre de la Tarea:&lt;/label>
+        &lt;input type="text" name="nombretarea" required value="&lt;?= $tarea_editar['nombretarea'] ?? '' ?>">&lt;br>
+
+        &lt;label>Estado:&lt;/label>
+        &lt;select name="estado">
+            &lt;option value="No iniciado" &lt;?= isset($tarea_editar) &amp;&amp; $tarea_editar['estado'] == 'No iniciado' ? 'selected' : '' ?>>No iniciado&lt;/option>
+            &lt;option value="En proceso" &lt;?= isset($tarea_editar) &amp;&amp; $tarea_editar['estado'] == 'En proceso' ? 'selected' : '' ?>>En proceso&lt;/option>
+            &lt;option value="Completado" &lt;?= isset($tarea_editar) &amp;&amp; $tarea_editar['estado'] == 'Completado' ? 'selected' : '' ?>>Completado&lt;/option>
+        &lt;/select>&lt;br>
+
+        &lt;label>Fecha de Creación:&lt;/label>
+        &lt;input type="date" name="fechacreacion" required value="&lt;?= $tarea_editar['fechacreacion'] ?? '' ?>">&lt;br>
+
+        &lt;label>Fecha de Finalización:&lt;/label>
+        &lt;input type="date" name="fechafinalizacion" value="&lt;?= $tarea_editar['fechafinalizacion'] ?? '' ?>">&lt;br>
+
+        &lt;label>Categoría:&lt;/label>
+        &lt;select name="idcategoria">
+            &lt;?php
+            $categorias = $conn->query("SELECT * FROM categoria")->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($categorias as $categoria) {
+                $selected = isset($tarea_editar) &amp;&amp; $tarea_editar['idcategoria'] == $categoria['idcategoria'] ? 'selected' : '';
+                echo "&lt;option value='{$categoria['idcategoria']}' $selected>{$categoria['nombre']}&lt;/option>";
+            }
+            ?>
+        &lt;/select>&lt;br>
+
+        &lt;label>Responsable:&lt;/label>
+        &lt;select name="idresponsable">
+            &lt;?php
+            $responsables = $conn->query("SELECT * FROM responsable")->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($responsables as $responsable) {
+                $selected = isset($tarea_editar) &amp;&amp; $tarea_editar['idresponsable'] == $responsable['idresponsable'] ? 'selected' : '';
+                echo "&lt;option value='{$responsable['idresponsable']}' $selected>{$responsable['nombre']}&lt;/option>";
+            }
+            ?>
+        &lt;/select>&lt;br>
+
+        &lt;button type="submit" name="guardar_tarea">&lt;?= isset($tarea_editar) ? 'Actualizar' : 'Guardar' ?> Tarea&lt;/button>
+    &lt;/form>
+
+    &lt;h2>Listado de Tareas&lt;/h2>
+
+    &lt;!-- Filtros de Búsqueda -->
+    &lt;form method="get" action="tareas.php">
+        &lt;label>Filtrar por Estado:&lt;/label>
+        &lt;select name="estado">
+            &lt;option value="">Todos&lt;/option>
+            &lt;option value="No iniciado" &lt;?= $estado == 'No iniciado' ? 'selected' : '' ?>>No iniciado&lt;/option>
+            &lt;option value="En proceso" &lt;?= $estado == 'En proceso' ? 'selected' : '' ?>>En proceso&lt;/option>
+            &lt;option value="Completado" &lt;?= $estado == 'Completado' ? 'selected' : '' ?>>Completado&lt;/option>
+        &lt;/select>
+
+        &lt;label>Buscar por Responsable:&lt;/label>
+        &lt;input type="text" name="nombre_responsable" value="&lt;?= $nombre_responsable ?>">
+
+        &lt;button type="submit">Aplicar Filtros&lt;/button>
+    &lt;/form>
+
+    &lt;!-- Tabla de Tareas -->
+    &lt;table border="1">
+        &lt;tr>
+            &lt;th>ID&lt;/th>
+            &lt;th>Nombre&lt;/th>
+            &lt;th>Estado&lt;/th>
+            &lt;th>Fecha Creación&lt;/th>
+            &lt;th>Fecha Finalización&lt;/th>
+            &lt;th>Categoría&lt;/th>
+            &lt;th>Responsable&lt;/th>
+            &lt;th>Acciones&lt;/th>
+        &lt;/tr>
+        &lt;?php foreach ($tareas as $tarea): ?>
+            &lt;tr>
+                &lt;td>&lt;?= $tarea['idtarea'] ?>&lt;/td>
+                &lt;td>&lt;?= $tarea['nombretarea'] ?>&lt;/td>
+                &lt;td>&lt;?= $tarea['estado'] ?>&lt;/td>
+                &lt;td>&lt;?= $tarea['fechacreacion'] ?>&lt;/td>
+                &lt;td>&lt;?= $tarea['fechafinalizacion'] ?>&lt;/td>
+                &lt;td>&lt;?= $tarea['nombre_categoria'] ?>&lt;/td>
+                &lt;td>&lt;?= $tarea['nombre_responsable'] ?>&lt;/td>
+                &lt;td>
+                    &lt;a href="tareas.php?editar=&lt;?= $tarea['idtarea'] ?>">Editar&lt;/a>
+                    &lt;a href="tareas.php?eliminar=&lt;?= $tarea['idtarea'] ?>" onclick="return confirm('¿Está seguro de eliminar esta tarea?')">Eliminar&lt;/a>
+                &lt;/td>
+            &lt;/tr>
+        &lt;?php endforeach; ?>
+    &lt;/table>
+&lt;/body>
+&lt;/html>
+
+</pre>
+
+
+
+<p>responsable.php</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="php" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">&lt;?php
+include 'conexion.php';
+
+// Crear o actualizar responsable
+if (isset($_POST['guardar_responsable'])) {
+    $idresponsable = $_POST['idresponsable'] ?? null;
+    $nombre = $_POST['nombre'];
+    $whatsapp = $_POST['whatsapp'];
+    $depto = $_POST['depto'];
+
+    if ($idresponsable) {  // Actualizar responsable
+        $query = "UPDATE responsable SET nombre = :nombre, whatsapp = :whatsapp, depto = :depto WHERE idresponsable = :idresponsable";
+        $stmt = $conn->prepare($query);
+        $stmt->execute([':nombre' => $nombre, ':whatsapp' => $whatsapp, ':depto' => $depto, ':idresponsable' => $idresponsable]);
+    } else {  // Crear nuevo responsable
+        $query = "INSERT INTO responsable (nombre, whatsapp, depto) VALUES (:nombre, :whatsapp, :depto)";
+        $stmt = $conn->prepare($query);
+        $stmt->execute([':nombre' => $nombre, ':whatsapp' => $whatsapp, ':depto' => $depto]);
+    }
+    header("Location: indexResponsable.php");
+    exit;
+}
+
+// Eliminar responsable--
+if (isset($_GET['eliminar'])) {
+    $idresponsable = $_GET['eliminar'];
+    $query = "DELETE FROM responsable WHERE idresponsable = :idresponsable";
+    $stmt = $conn->prepare($query);
+    $stmt->execute([':idresponsable' => $idresponsable]);
+    header("Location: indexResponsable.php");
+    exit;
+}
+
+// Listar responsables
+$query = "SELECT * FROM responsable";
+$stmt = $conn->query($query);
+$responsables = $stmt->fetchAll(PDO::FETCH_ASSOC);
+?></pre>
+
+
+
+<p>tareas.php</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="php" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">&lt;?php
+include 'conexion.php';
+
+// Cargar tarea para edición
+$tarea_editar = null;
+if (isset($_GET['editar'])) {
+    $idtarea = $_GET['editar'];
+    $query = "SELECT * FROM tareas WHERE idtarea = :idtarea";
+    $stmt = $conn->prepare($query);
+    $stmt->execute([':idtarea' => $idtarea]);
+    $tarea_editar = $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+// Crear o actualizar tarea
+if (isset($_POST['guardar_tarea'])) {
+    $idtarea = $_POST['idtarea'] ?? null;
+    $nombretarea = $_POST['nombretarea'];
+    $estado = $_POST['estado'];
+    $fechacreacion = $_POST['fechacreacion'];
+    $fechafinalizacion = $_POST['fechafinalizacion'];
+    $idcategoria = $_POST['idcategoria'];
+    $idresponsable = $_POST['idresponsable'];
+
+    if ($idtarea) {  // Actualizar tarea existente
+        $query = "UPDATE tareas SET nombretarea = :nombretarea, estado = :estado, fechafinalizacion = :fechafinalizacion, 
+                  idcategoria = :idcategoria, idresponsable = :idresponsable WHERE idtarea = :idtarea";
+        $stmt = $conn->prepare($query);
+        $stmt->execute([
+            ':nombretarea' => $nombretarea,
+            ':estado' => $estado,
+            ':fechafinalizacion' => $fechafinalizacion,
+            ':idcategoria' => $idcategoria,
+            ':idresponsable' => $idresponsable,
+            ':idtarea' => $idtarea
+        ]);
+    } else {  // Crear nueva tarea
+        $query = "INSERT INTO tareas (nombretarea, estado, fechacreacion, fechafinalizacion, idcategoria, idresponsable)
+                  VALUES (:nombretarea, :estado, :fechacreacion, :fechafinalizacion, :idcategoria, :idresponsable)";
+        $stmt = $conn->prepare($query);
+        $stmt->execute([
+            ':nombretarea' => $nombretarea,
+            ':estado' => $estado,
+            ':fechacreacion' => $fechacreacion,
+            ':fechafinalizacion' => $fechafinalizacion,
+            ':idcategoria' => $idcategoria,
+            ':idresponsable' => $idresponsable
+        ]);
+    }
+    header("Location: tareas.php");
+    exit;
+}
+
+// Eliminar tarea
+if (isset($_GET['eliminar'])) {
+    $idtarea = $_GET['eliminar'];
+    $query = "DELETE FROM tareas WHERE idtarea = :idtarea";
+    $stmt = $conn->prepare($query);
+    $stmt->execute([':idtarea' => $idtarea]);
+    header("Location: tareas.php");
+    exit;
+}
+?> </pre>
+]]></content:encoded>
+					
+					<wfw:commentRss>C:/laragon/www/LinkUp/2024/12/02/agenda-de-tareas/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Agenda de Contactos</title>
+		<link>C:/laragon/www/LinkUp/2024/12/02/agenda-de-contactos/</link>
+					<comments>C:/laragon/www/LinkUp/2024/12/02/agenda-de-contactos/#respond</comments>
+		
+		<dc:creator><![CDATA[ana]]></dc:creator>
+		<pubDate>Mon, 02 Dec 2024 22:17:25 +0000</pubDate>
+				<category><![CDATA[Sin categoría]]></category>
+		<guid isPermaLink="false">C:/laragon/www/LinkUp/?p=133</guid>
+
+					<description><![CDATA[El siguiente código trata sobre un proyecto de diferentes archivos escritos en PHP que construyen un proyecto para una agenda de Contactos. conexion.php insertar.php consulta.php enlistar.php consulta.php registrar.php index.php estilo.css]]></description>
+										<content:encoded><![CDATA[
+<p>El siguiente código trata sobre un proyecto de diferentes archivos escritos en PHP que construyen un proyecto para una agenda de Contactos.</p>
+
+
+
+<p>conexion.php</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="php" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">&lt;?php
+$host = "localhost";
+$user = "root";
+$password = "";
+$dbname = "agenda_db";
+
+try{
+    $conn = new PDO("mysql:host =$host;dbname=$dbname;charset=utf8", $user, $password);
+
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    echo "Conexion exitosa &lt;br>";
+
+}catch (PDOException $e){
+    die("Conexion fallida " . $e->getMessage());
+}
+
+?></pre>
+
+
+
+<p>insertar.php</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="php" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">&lt;?php 
+
+function añadirContacto($Nombre, $telefono_Oficina, $telefono_Casa, $Celular, $Empresa, $Cargo, $Fecha_de_Cumpleanos, $conn) {
+    // Consulta SQL con parámetros nombrados
+    $sql = "INSERT INTO contactos (Nombre, telefono_Oficina, telefono_Casa, Celular, Empresa, Cargo, Fecha_de_Cumpleanos) 
+            VALUES (:Nombre, :telefono_Oficina, :telefono_Casa, :Celular, :Empresa, :Cargo, :Fecha_de_Cumpleanos)";
+
+    try {
+        $stmt = $conn->prepare($sql);
+
+        // Bind de parámetros usando los nombres de parámetros
+        $stmt->bindParam(':Nombre', $Nombre, PDO::PARAM_STR);
+        $stmt->bindParam(':telefono_Oficina', $telefono_Oficina, PDO::PARAM_STR);
+        $stmt->bindParam(':telefono_Casa', $telefono_Casa, PDO::PARAM_STR);
+        $stmt->bindParam(':Celular', $Celular, PDO::PARAM_STR);
+        $stmt->bindParam(':Empresa', $Empresa, PDO::PARAM_STR);
+        $stmt->bindParam(':Cargo', $Cargo, PDO::PARAM_STR);
+        $stmt->bindParam(':Fecha_de_Cumpleanos', $Fecha_de_Cumpleanos, PDO::PARAM_STR);
+
+        // Ejecuta la consulta y muestra el resultado
+        if ($stmt->execute()) {
+            echo "Datos insertados correctamente";
+        } else {
+            echo "Error al insertar datos";
+        }
+    } catch (PDOException $e) {
+        echo "Error en la preparación de la consulta: " . $e->getMessage();
+    }
+}
+?>
+</pre>
+
+
+
+<p>consulta.php</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="php" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">&lt;!DOCTYPE html>
+&lt;html lang="es">
+&lt;head>
+    &lt;meta charset="UTF-8">
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0">
+    &lt;title>Consultar Contactos&lt;/title>
+    &lt;link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    &lt;link rel="stylesheet" href="estilo.css">
+&lt;/head>
+&lt;body>
+
+&lt;div class="container mt-5">
+    &lt;h2 class="text-center">Consultar Contactos&lt;/h2>
+    &lt;form method="POST" action="" class="text-center mb-3">
+        &lt;div class="form-group">
+            &lt;label for="buscar_nombre">Buscar por Nombre:&lt;/label>
+            &lt;input type="text" id="buscar_nombre" name="buscar_nombre" required class="form-control w-50 mx-auto">
+        &lt;/div>
+        &lt;button type="submit" name="buscar" class="btn" style="background-color: #343a40; color: white;">Buscar&lt;/button>
+    &lt;/form>
+
+    &lt;h4 class="text-center">Resultado de Búsqueda&lt;/h4>
+    &lt;table class="table table-bordered mt-3">
+        &lt;thead class="thead-dark">
+            &lt;tr>
+                &lt;th>ID&lt;/th>
+                &lt;th>Nombre&lt;/th>
+                &lt;th>Teléfono Oficina&lt;/th>
+                &lt;th>Teléfono Casa&lt;/th>
+                &lt;th>Celular&lt;/th>
+                &lt;th>Empresa&lt;/th>
+                &lt;th>Cargo&lt;/th>
+                &lt;th>Fecha de Cumpleaños&lt;/th>
+            &lt;/tr>
+        &lt;/thead>
+        &lt;tbody>
+            &lt;?php
+            include 'conexion.php';
+            if (isset($_POST['buscar'])) {
+                $buscar_nombre = $_POST['buscar_nombre'];
+                try {
+                    $sql = "SELECT * FROM contactos WHERE Nombre LIKE :nombre";
+                    $stmt = $conn->prepare($sql);
+                    $stmt->bindValue(':nombre', "%$buscar_nombre%", PDO::PARAM_STR);
+                    $stmt->execute();
+
+                    if ($stmt->rowCount() > 0) {
+                        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                            echo "&lt;tr>";
+                            echo "&lt;td>" . htmlspecialchars($row['IDContacto']) . "&lt;/td>";
+                            echo "&lt;td>" . htmlspecialchars($row['Nombre']) . "&lt;/td>";
+                            echo "&lt;td>" . htmlspecialchars($row['telefono_Oficina']) . "&lt;/td>";
+                            echo "&lt;td>" . htmlspecialchars($row['telefono_Casa']) . "&lt;/td>";
+                            echo "&lt;td>" . htmlspecialchars($row['Celular']) . "&lt;/td>";
+                            echo "&lt;td>" . htmlspecialchars($row['Empresa']) . "&lt;/td>";
+                            echo "&lt;td>" . htmlspecialchars($row['Cargo']) . "&lt;/td>";
+                            echo "&lt;td>" . htmlspecialchars($row['Fecha_de_Cumpleanos']) . "&lt;/td>";
+                            echo "&lt;/tr>";
+                        }
+                    } else {
+                        echo "&lt;tr>&lt;td colspan='8' class='text-center'>No se encontraron contactos con ese nombre.&lt;/td>&lt;/tr>";
+                    }
+                } catch (PDOException $e) {
+                    echo "Error en la consulta: " . $e->getMessage();
+                }
+            }
+            ?>
+        &lt;/tbody>
+    &lt;/table>
+
+    &lt;!-- Botón para regresar al inicio -->
+    &lt;div class="text-center mt-3">
+        &lt;form action="index.php" method="get">
+            &lt;input type="submit" class="btn" style="background-color: #007bff; color: white;" value="Inicio" />
+        &lt;/form>
+    &lt;/div>
+&lt;/div>
+
+&lt;script src="https://code.jquery.com/jquery-3.3.1.slim.min.js">&lt;/script>
+&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js">&lt;/script>
+&lt;script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js">&lt;/script>
+
+&lt;/body>
+&lt;/html>
+</pre>
+
+
+
+<p>enlistar.php</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="php" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">&lt;?php 
+include 'conexion.php'; // para la conexión a la base de datos
+
+try {
+    // Consulta para obtener todos los contactos
+    $stmt = $conn->query("SELECT * FROM contactos");
+    $contactos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+} catch (PDOException $e) {
+    echo "Error en la consulta: " . $e->getMessage();
+    die();
+}
+?>
+
+&lt;!DOCTYPE html>
+&lt;html lang="es">
+&lt;head>
+    &lt;meta charset="UTF-8">
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0">
+    &lt;title>Lista de Contactos&lt;/title>
+    &lt;link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    &lt;link rel="stylesheet" href="estilo.css"> 
+&lt;/head>
+&lt;body>
+
+&lt;div class="container mt-5">
+    &lt;h2 class="text-center">Lista de Contactos&lt;/h2>
+
+    &lt;?php if (empty($contactos)): ?>
+        &lt;p class="text-center">No hay contactos.&lt;/p>
+    &lt;?php else: ?>
+        &lt;table class="table table-bordered mt-3">
+            &lt;thead class="thead-dark">
+                &lt;tr>
+                    &lt;th>ID Contacto&lt;/th>
+                    &lt;th>Nombre&lt;/th>
+                    &lt;th>Teléfono Oficina&lt;/th>
+                    &lt;th>Teléfono Casa&lt;/th>
+                    &lt;th>Celular&lt;/th>
+                    &lt;th>Empresa&lt;/th>
+                    &lt;th>Cargo&lt;/th>
+                    &lt;th>Fecha de Cumpleaños&lt;/th>
+                &lt;/tr>
+            &lt;/thead>
+            &lt;tbody>
+                &lt;?php foreach ($contactos as $contacto): ?>
+                    &lt;tr>
+                        &lt;td>&lt;?php echo htmlspecialchars($contacto['IDContacto']); ?>&lt;/td>
+                        &lt;td>&lt;?php echo htmlspecialchars($contacto['Nombre']); ?>&lt;/td>
+                        &lt;td>&lt;?php echo htmlspecialchars($contacto['telefono_Oficina']); ?>&lt;/td>
+                        &lt;td>&lt;?php echo htmlspecialchars($contacto['telefono_Casa']); ?>&lt;/td>
+                        &lt;td>&lt;?php echo htmlspecialchars($contacto['Celular']); ?>&lt;/td>
+                        &lt;td>&lt;?php echo htmlspecialchars($contacto['Empresa']); ?>&lt;/td>
+                        &lt;td>&lt;?php echo htmlspecialchars($contacto['Cargo']); ?>&lt;/td>
+                        &lt;td>&lt;?php echo htmlspecialchars($contacto['Fecha_de_Cumpleanos']); ?>&lt;/td>
+                    &lt;/tr>
+                &lt;?php endforeach; ?>
+            &lt;/tbody>
+        &lt;/table>
+    &lt;?php endif; ?>
+
+    &lt;!-- Botón para regresar al inicio con color personalizado -->
+    &lt;div class="text-center mt-3">
+        &lt;form action="index.php" method="get">
+            &lt;input type="submit" class="btn" style="background-color: #007bff; color: white;" value="Inicio" />
+        &lt;/form>
+    &lt;/div>
+&lt;/div>
+
+&lt;script src="https://code.jquery.com/jquery-3.3.1.slim.min.js">&lt;/script>
+&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js">&lt;/script>
+&lt;script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js">&lt;/script>
+
+&lt;/body>
+&lt;/html>
+</pre>
+
+
+
+<p>consulta.php</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="php" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">&lt;!DOCTYPE html>
+&lt;html lang="es">
+&lt;head>
+    &lt;meta charset="UTF-8">
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0">
+    &lt;title>Consultar Contactos&lt;/title>
+    &lt;link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    &lt;link rel="stylesheet" href="estilo.css">
+&lt;/head>
+&lt;body>
+
+&lt;div class="container mt-5">
+    &lt;h2 class="text-center">Consultar Contactos&lt;/h2>
+    &lt;form method="POST" action="" class="text-center mb-3">
+        &lt;div class="form-group">
+            &lt;label for="buscar_nombre">Buscar por Nombre:&lt;/label>
+            &lt;input type="text" id="buscar_nombre" name="buscar_nombre" required class="form-control w-50 mx-auto">
+        &lt;/div>
+        &lt;button type="submit" name="buscar" class="btn" style="background-color: #343a40; color: white;">Buscar&lt;/button>
+    &lt;/form>
+
+    &lt;h4 class="text-center">Resultado de Búsqueda&lt;/h4>
+    &lt;table class="table table-bordered mt-3">
+        &lt;thead class="thead-dark">
+            &lt;tr>
+                &lt;th>ID&lt;/th>
+                &lt;th>Nombre&lt;/th>
+                &lt;th>Teléfono Oficina&lt;/th>
+                &lt;th>Teléfono Casa&lt;/th>
+                &lt;th>Celular&lt;/th>
+                &lt;th>Empresa&lt;/th>
+                &lt;th>Cargo&lt;/th>
+                &lt;th>Fecha de Cumpleaños&lt;/th>
+            &lt;/tr>
+        &lt;/thead>
+        &lt;tbody>
+            &lt;?php
+            include 'conexion.php';
+            if (isset($_POST['buscar'])) {
+                $buscar_nombre = $_POST['buscar_nombre'];
+                try {
+                    $sql = "SELECT * FROM contactos WHERE Nombre LIKE :nombre";
+                    $stmt = $conn->prepare($sql);
+                    $stmt->bindValue(':nombre', "%$buscar_nombre%", PDO::PARAM_STR);
+                    $stmt->execute();
+
+                    if ($stmt->rowCount() > 0) {
+                        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                            echo "&lt;tr>";
+                            echo "&lt;td>" . htmlspecialchars($row['IDContacto']) . "&lt;/td>";
+                            echo "&lt;td>" . htmlspecialchars($row['Nombre']) . "&lt;/td>";
+                            echo "&lt;td>" . htmlspecialchars($row['telefono_Oficina']) . "&lt;/td>";
+                            echo "&lt;td>" . htmlspecialchars($row['telefono_Casa']) . "&lt;/td>";
+                            echo "&lt;td>" . htmlspecialchars($row['Celular']) . "&lt;/td>";
+                            echo "&lt;td>" . htmlspecialchars($row['Empresa']) . "&lt;/td>";
+                            echo "&lt;td>" . htmlspecialchars($row['Cargo']) . "&lt;/td>";
+                            echo "&lt;td>" . htmlspecialchars($row['Fecha_de_Cumpleanos']) . "&lt;/td>";
+                            echo "&lt;/tr>";
+                        }
+                    } else {
+                        echo "&lt;tr>&lt;td colspan='8' class='text-center'>No se encontraron contactos con ese nombre.&lt;/td>&lt;/tr>";
+                    }
+                } catch (PDOException $e) {
+                    echo "Error en la consulta: " . $e->getMessage();
+                }
+            }
+            ?>
+        &lt;/tbody>
+    &lt;/table>
+
+    &lt;!-- Botón para regresar al inicio -->
+    &lt;div class="text-center mt-3">
+        &lt;form action="index.php" method="get">
+            &lt;input type="submit" class="btn" style="background-color: #007bff; color: white;" value="Inicio" />
+        &lt;/form>
+    &lt;/div>
+&lt;/div>
+
+&lt;script src="https://code.jquery.com/jquery-3.3.1.slim.min.js">&lt;/script>
+&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js">&lt;/script>
+&lt;script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js">&lt;/script>
+
+&lt;/body>
+&lt;/html>
+</pre>
+
+
+
+<p>registrar.php</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="php" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">&lt;link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+&lt;script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js">&lt;/script>
+&lt;script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">&lt;/script>
+&lt;!------ Include the above in your HEAD tag ---------->
+
+
+&lt;!DOCTYPE html>
+&lt;html lang="en">
+&lt;head>
+    &lt;meta charset="UTF-8">
+    &lt;title>PHP Form&lt;/title>
+    &lt;link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
+    &lt;link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous"/>
+    &lt;link rel = "stylesheet" href = "estilo.css"> 
+&lt;/head>
+&lt;body>
+ 
+    &lt;div class="container">
+       
+        &lt;p class="h2 text-center">Form&lt;/p>
+        &lt;form action="" method="post">
+            &lt;div class="preview text-center">
+                &lt;img class="preview-img" src="http://simpleicon.com/wp-content/uploads/account.png" alt="Preview Image" width="200" height="200"/>
+                &lt;span class="Error">&lt;/span>
+            &lt;/div>
+            &lt;div class="form-group">
+                &lt;label>Nombre:&lt;/label>
+                &lt;input class="form-control" type="text" name="Nombre" required placeholder="Ingresa tu nombre"/>
+                &lt;span class="Error">&lt;/span>
+            &lt;/div>
+            &lt;div class="form-group">
+                &lt;label>Teléfono Oficina:&lt;/label>
+                &lt;input class="form-control" type="text" name="telefono_Oficina" required placeholder="Ingresa tu teléfono"/>
+                &lt;span class="Error">&lt;/span>
+            &lt;/div>
+            &lt;div class="form-group">
+                &lt;label>Teléfono Casa:&lt;/label>
+                &lt;input class="form-control" type="text" name="telefono_Casa" required placeholder="Ingresa tu teléfono"/>
+                &lt;span class="Error">&lt;/span>
+            &lt;/div>
+            &lt;div class="form-group">
+                &lt;label> Celular:&lt;/label>
+                &lt;input class="form-control" type="text" name="Celular" required placeholder="Ingresa tu celular"/>
+                &lt;span class="Error">&lt;/span>
+            &lt;/div>
+            &lt;div class="form-group">
+                &lt;label> Empresa:&lt;/label>
+                &lt;input class="form-control" type="text" name="Empresa" required placeholder="Ingresa tu empresa"/>
+                &lt;span class="Error">&lt;/span>
+            &lt;/div>
+            &lt;div class="form-group">
+                &lt;label>Cargo:&lt;/label>
+                &lt;input class="form-control" type="text" name="Cargo" required placeholder="Ingresa tu cargo"/>
+                &lt;span class="Error">&lt;/span>
+            &lt;/div>
+            &lt;div class="form-group">
+                &lt;label>Fecha de Cumpleaños:&lt;/label>
+                &lt;input class="form-control" type="text" name="Fecha_de_Cumpleanos" required placeholder="Ingresa tu fecha de Cumpleaños"/>
+                &lt;span class="Error">&lt;/span>
+            &lt;/div>
+            &lt;div class="form-group">
+                &lt;input class="btn btn-primary btn-block" type="submit" name = 'submit' value="Submit"/>
+            &lt;/div>
+            
+        &lt;/form>
+        &lt;div class="buttons">
+            &lt;form action="index.php" method="get">
+                &lt;input type="submit" class="button_inicio" value="Inicio" />
+            &lt;/form>
+        &lt;/div>
+
+    &lt;/div>
+    &lt;script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">&lt;/script>
+    &lt;script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">&lt;/script>
+    &lt;script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">&lt;/script>
+
+
+    &lt;?php
+include "conexion.php";
+include "insertar.php";
+
+if(isset($_POST['submit'])){
+    $Nombre = $_POST['Nombre'];
+    $telefono_Oficina = $_POST['telefono_Oficina'];
+    $telefono_Casa = $_POST['telefono_Casa'];
+    $Celular = $_POST['Celular'];
+    $Empresa = $_POST['Empresa'];
+    $Cargo = $_POST['Cargo'];
+    $Fecha_de_Cumpleanos = $_POST['Fecha_de_Cumpleanos'];
+    
+
+    añadirContacto($Nombre,$telefono_Oficina,$telefono_Casa,$Celular,$Empresa, $Cargo, $Fecha_de_Cumpleanos,$conn);
+
+    $conn = null;
+}
+?>
+
+
+
+
+&lt;/body>
+&lt;/html></pre>
+
+
+
+<p>index.php</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="html" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">&lt;!DOCTYPE html>
+&lt;html lang="en">
+&lt;head>
+    &lt;meta charset="UTF-8">
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0">
+    &lt;title>Bienvenido&lt;/title>
+    &lt;style>
+           /* Estilos globales */
+           * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Contenedor principal */
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            text-align: center;
+            background-color: #f7f7f7;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Título principal */
+        h1 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        /* Párrafo de introducción */
+        p {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        /* Estilos del menú */
+        .menu {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* Enlaces del menú */
+        .menu a {
+            display: block;
+            padding: 12px;
+            font-size: 18px;
+            color: #fff;
+            background-color: #007bff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Efecto hover para los enlaces */
+        .menu a:hover {
+            background-color: #0056b3;
+        }
+        
+
+        
+
+
+        &lt;/style>
+&lt;/head>
+&lt;body>
+&lt;div class="container">
+    &lt;h1>Bienvenido a la Agenda de Contactos&lt;/h1>
+    &lt;p>Seleccione una de las siguientes opciones para continuar:&lt;/p>
+
+    &lt;div class="menu">
+        &lt;a href="registrar.php">Registrar Contacto&lt;/a>
+        &lt;a href="enlistar.php">Enlistar Contactos&lt;/a>
+        &lt;a href="consulta.php">Consultar Contactos&lt;/a>
+    
+    &lt;/div>
+&lt;/div>    
+
+
+&lt;/body>
+&lt;/html></pre>
+
+
+
+<p>estilo.css</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="css" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">
+html,body
+{
+    width: 500px;
+    margin: auto;
+}
+.container
+{
+    width: 500px;
+    margin: 20px auto;
+}
+
+.preview
+{
+    padding: 10px;
+    position: relative;
+}
+
+.preview i
+{
+    color: white;
+    font-size: 35px;
+    transform: translate(50px,130px);
+}
+
+.preview-img
+{
+    border-radius: 100%;
+    box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.7);
+}
+
+.browse-button
+{
+    width: 200px;
+    height: 200px;
+    border-radius: 100%;
+    position: absolute; /* Tweak the position property if the element seems to be unfit */
+    top: 10px;
+    left: 132px;
+    background: linear-gradient(180deg, transparent, black);
+    opacity: 0;
+    transition: 0.3s ease;
+}
+
+.browse-button:hover
+{
+    opacity: 1;
+}
+
+.browse-input
+{
+    width: 200px;
+    height: 200px;
+    border-radius: 100%;
+    transform: translate(-1px,-26px);
+    opacity: 0;
+}
+
+.form-group
+{
+    width:  250px;
+    margin: 10px auto;
+}
+
+.form-group input
+{
+    transition: 0.3s linear;
+}
+
+.form-group input:focus
+{
+    border: 1px solid crimson;
+    box-shadow: 0 0 0 0;
+}
+
+.Error
+{
+    color: crimson;
+    font-size: 13px;
+}
+
+.Back
+{
+    font-size: 25px;
+}
+
+/* Estilos para el botón */
+.button_inicio {
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #007bff; /* Color azul */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+/* Efecto hover */
+.button_inicio:hover {
+    background-color: #0056b3; /* Azul más oscuro */
+    transform: scale(1.05); /* Agranda un poco el botón */
+}
+
+/* Efecto de clic */
+.button_inicio:active {
+    background-color: #004494; /* Azul aún más oscuro */
+    transform: scale(0.98); /* Pequeña reducción de tamaño al hacer clic */
+}</pre>
+
+
+
+<p></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>C:/laragon/www/LinkUp/2024/12/02/agenda-de-contactos/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Herencia y Conexión MySQL</title>
+		<link>C:/laragon/www/LinkUp/2024/12/02/herencia-y-conexion-mysql/</link>
+					<comments>C:/laragon/www/LinkUp/2024/12/02/herencia-y-conexion-mysql/#respond</comments>
+		
+		<dc:creator><![CDATA[ana]]></dc:creator>
+		<pubDate>Mon, 02 Dec 2024 22:10:14 +0000</pubDate>
+				<category><![CDATA[Sin categoría]]></category>
+		<guid isPermaLink="false">C:/laragon/www/LinkUp/?p=130</guid>
+
+					<description><![CDATA[El siguiente código es el ejemplo de una conexión con MySQL y haciendo uso de la programación orientada a objetos. conexion.php index.php insertar.php maestros.php alumnos.php]]></description>
+										<content:encoded><![CDATA[
+<p>El siguiente código es el ejemplo de una conexión con MySQL y haciendo uso de la programación orientada a objetos.</p>
+
+
+
+<p>conexion.php</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="php" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">&lt;?php
+
+$host = "localhost";
+$user = "root";
+$password = "";
+$dbname = "db_uadec";
+
+$conn = new mysqli($host,$user,$password,$dbname);
+
+if($conn-> connect_error){
+    die("Conexión fallida: ".$conn-> connect_error);
+    
+}
+
+?></pre>
+
+
+
+<p>index.php</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="php" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">&lt;?php
+//index.php
+include 'conexion.php';
+include 'insertar.php';
+
+//variables con datos a insertar
+    $nombreA = "Ana Amador";
+    $edadA = 18;
+    $matriculaA = "12345";
+
+//llamar a la funcion de insercion
+    añadirAlumno($nombreA, $edadA, $matriculaA, $conn);
+
+$nombreM = "Fulanito Gomez";
+$edadM = 30;
+$matriculaM = "25410";
+$asignaturaM = "matematicas";
+
+añadirMaestro($nombreM, $edadM, $matriculaM,$asignaturaM, $conn);
+
+//Cerrar la conexion
+$conn->close();
+
+?></pre>
+
+
+
+<p>insertar.php</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="php" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">&lt;?php
+function añadirAlumno ($nombreA,$edadA,$matriculaA,$conn){
+    $sql = "INSERT INTO alumnos (nombre, edad, matricula) VALUES (?,?,?)";
+    $stmt = $conn->prepare($sql);
+
+    if($stmt){
+        $stmt -> bind_param("sis",$nombreA, $edadA, $matriculaA);
+        if($stmt -> execute()){
+            echo "Datos insertados correctamente.";
+        }else{
+            echo "Error al insertar datos:" . $stmt->error;
+        }
+        $stmt -> close();
+    }else{
+        echo "Error en la preparación de la consulta:". $conn->error;
+    }
+}
+
+function añadirMaestro($nombreM,$edadM,$matriculaM,$asignaturaM,$conn){
+    $sql = "INSERT INTO maestros (nombre, edad, matricula, asignatura) VALUES (?,?,?,?)";
+    $stmt = $conn->prepare($sql);
+
+    if($stmt){
+        $stmt -> bind_param("siss", $nombreM, $edadM ,$matriculaM, $asignaturaM); // s para string, i para int
+        if($stmt -> execute()){
+            echo "Datos insertados correctamente.";
+        }else{
+            echo "Error al insertar datos:" . $stmt->error;
+        }
+        $stmt -> close();
+    }else{
+        echo "Error en la preparación de la consulta:". $conn->error;
+    }
+}
+?>
+</pre>
+
+
+
+<p>maestros.php</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="php" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">&lt;?php
+include 'alumnos.php';
+
+class Maestro extends Alumnos{
+    public $asignatura;
+
+    // Constructor de la clase hija que incluye las características extras
+    public function __construct($nombre, $edad, $matricula, $asignatura) {
+        // Llamar al constructor de la clase padre
+        parent:: __construct($nombre, $edad, $matricula);
+        $this->asignatura = $asignatura;
+}
+
+ 
+}
+
+    // Ejemplo de uso de la clase mostrarMaestro
+    $Maestro = new Maestro("Sofia", "34", "13412", "Matematicas");
+    $Maestro ->mostrarMaestro();
+    
+?></pre>
+
+
+
+<p>alumnos.php</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="php" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">&lt;?php
+class Alumnos{
+    //propiedades de alumnos
+    public $nombre;
+    public $edad;
+    public $matricula;
+
+    // Constructor para inicializar los valores
+    public function __construct($nombre, $edad, $matricula) {
+        $this->nombre = $nombre;
+        $this->edad = $edad;
+        $this->matricula = $matricula;
+    }
+    // Metodo para mostrar los datos del alumno
+    //public function mostrarAlumno(){
+      //  echo "Nombre: " . $this->nombre . "\n";
+        //echo "Edad: " . $this->edad . "\n";
+        //echo "Matricula: " . $this->matricula . "\n";
+    //}     
+}
+?></pre>
+]]></content:encoded>
+					
+					<wfw:commentRss>C:/laragon/www/LinkUp/2024/12/02/herencia-y-conexion-mysql/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Conexión Base de Datos PDO</title>
+		<link>C:/laragon/www/LinkUp/2024/12/02/conexion-base-de-datos-pdo/</link>
+					<comments>C:/laragon/www/LinkUp/2024/12/02/conexion-base-de-datos-pdo/#respond</comments>
+		
+		<dc:creator><![CDATA[ana]]></dc:creator>
+		<pubDate>Mon, 02 Dec 2024 22:01:02 +0000</pubDate>
+				<category><![CDATA[Sin categoría]]></category>
+		<guid isPermaLink="false">C:/laragon/www/LinkUp/?p=127</guid>
+
+					<description><![CDATA[El siguiente código esta separado por archivos, y este sirve para hacer una inserción de datos a una bade de datos con una conexión PDO en PHP. index.php indexPDO.php insertarPDO.php estilos.css]]></description>
+										<content:encoded><![CDATA[
+<p>El siguiente código esta separado por archivos, y este sirve para hacer una inserción de datos a una bade de datos con una conexión PDO en PHP.</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="php" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">&lt;?php
+// conexionPDO.php
+$host = "localhost";
+$user = "root";
+$password = "";
+$dbname = "db_uadec";
+
+try{
+    $conn = new PDO("mysql: host =$host;dbname=$dbname;charset=utf8", $user, $password);
+
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    echo "Conexion exitosa &lt;br>";
+
+}catch (PDOException $e){
+    die("Conexion fallida " . $e->getMessage());
+}
+
+?></pre>
+
+
+
+<p>index.php</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="php" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">&lt;!DOCTYPE html>
+&lt;html lang="en">
+&lt;head>
+    &lt;meta charset="UTF-8">
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0">
+    &lt;link rel= "stylesheet" href = "estilos.css">
+    &lt;title>Captura de Datos&lt;/title>
+&lt;/head>
+&lt;body>
+
+&lt;form method="post" action="">
+  &lt;label>
+    &lt;p class="label-txt">INGRESA TU NOMBRE&lt;/p>
+    &lt;input type="text" name= 'nombre' class="input">
+    &lt;div class="line-box">
+      &lt;div class="line">&lt;/div>
+    &lt;/div>
+  &lt;/label>
+  &lt;label>
+    &lt;p class="label-txt">INGRESA TU EMAIL&lt;/p>
+    &lt;input type="email" name = 'correo' class="input">
+    &lt;div class="line-box">
+      &lt;div class="line">&lt;/div>
+    &lt;/div>
+  &lt;/label>
+  &lt;label>
+    &lt;p class="label-txt">INGRESA TU EDAD&lt;/p>
+    &lt;input type="number" name = 'edad' class="input">
+    &lt;div class="line-box">
+      &lt;div class="line">&lt;/div>
+    &lt;/div>
+  &lt;/label>
+  &lt;button type="submit" name = 'submit' >submit&lt;/button>
+&lt;/form>
+
+&lt;?php
+include "conexionPDO.php";
+include "insertarPDO.php";
+
+if(isset($_POST['submit'])){
+    $nombre = $_POST['nombre'];
+    $correo = $_POST['correo'];
+    $edad = $_POST['edad'];
+
+    insertarDatos($nombre, $correo, $edad, $conn);
+
+    $conn = null;
+}
+?>
+
+
+&lt;/body>
+&lt;/html></pre>
+
+
+
+<p>indexPDO.php</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="php" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">&lt;?php
+
+include 'conexionPDO.php';
+include 'insertarPDO.php';
+
+$nombre = "Ana Amador";
+$correo = "ana.amador@exaple.com";
+$edad = 18;
+
+insertarDatos($nombre,$correo,$edad,$conn);
+
+$conn=null;
+
+?></pre>
+
+
+
+<p>insertarPDO.php</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="php" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">&lt;?php
+
+function insertarDatos($nombre, $correo, $edad, $conn){
+$sql = "INSERT INTO usuarios (nombre,correo, edad) VALUES (:nombre, :correo, :edad)";
+
+try{
+    $stmt = $conn ->prepare($sql);
+    $stmt->bindParam(':nombre', $nombre, PDO ::PARAM_STR);
+    $stmt->bindParam(':correo', $correo, PDO ::PARAM_STR);
+    $stmt->bindParam(':edad', $edad, PDO ::PARAM_INT);
+
+    if ($stmt->execute()){
+        echo " Datos insertados correctamente";
+    }else {
+        echo "Error al insertar datos";
+    }
+}catch(PDOException $e){
+    echo "Error en la preparacion de la consulta: " . $e->getMessage();
+}
+}
+?></pre>
+
+
+
+<p>estilos.css</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="php" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">
+
+body {
+  background: #e1d876;
+}
+form {
+  width: 60%;
+  margin: 60px auto;
+  background: #efefef;
+  padding: 60px 120px 80px 120px;
+  text-align: center;
+  -webkit-box-shadow: 2px 2px 3px rgba(0,0,0,0.1);
+  box-shadow: 2px 2px 3px rgba(0,0,0,0.1);
+}
+label {
+  display: block;
+  position: relative;
+  margin: 40px 0px;
+}
+.label-txt {
+  position: absolute;
+  top: -1.6em;
+  padding: 10px;
+  font-family: sans-serif;
+  font-size: .8em;
+  letter-spacing: 1px;
+  color: rgb(120,120,120);
+  transition: ease .3s;
+}
+.input {
+  width: 100%;
+  padding: 10px;
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+.line-box {
+  position: relative;
+  width: 100%;
+  height: 2px;
+  background: #BCBCBC;
+}
+
+.line {
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  top: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #8BC34A;
+  transition: ease .6s;
+}
+
+.input:focus + .line-box .line {
+  width: 100%;
+}
+
+.label-active {
+  top: -3em;
+}
+
+button {
+  display: inline-block;
+  padding: 12px 24px;
+  background: rgb(220,220,220);
+  font-weight: bold;
+  color: rgb(120,120,120);
+  border: none;
+  outline: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: ease .3s;
+}
+
+button:hover {
+  background: #8BC34A;
+  color: #ffffff;
+}
+</pre>
+]]></content:encoded>
+					
+					<wfw:commentRss>C:/laragon/www/LinkUp/2024/12/02/conexion-base-de-datos-pdo/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Conexión DB PHP</title>
+		<link>C:/laragon/www/LinkUp/2024/12/02/hola-mundo/</link>
+					<comments>C:/laragon/www/LinkUp/2024/12/02/hola-mundo/#comments</comments>
+		
+		<dc:creator><![CDATA[ana]]></dc:creator>
+		<pubDate>Mon, 02 Dec 2024 16:21:22 +0000</pubDate>
+				<category><![CDATA[Sin categoría]]></category>
+		<guid isPermaLink="false">C:/laragon/www/LinkUp/?p=1</guid>
+
+					<description><![CDATA[El siguiente código sirve para hacer una conexión a una base de datos en PHP]]></description>
+										<content:encoded><![CDATA[
+<p>El siguiente código sirve para hacer una conexión a una base de datos en PHP</p>
+
+
+
+<p></p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="php" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">&lt;?php
+// conexión.php
+$host = "localhost";
+$user = "root";
+$password = "";
+$dbname = "db_uadec";
+
+$conn = new mysqli($host,$user,$password,$dbname);
+
+if($conn-> connect_error){
+    die("Conexión fallida: ".$conn-> connect_error);
+    
+}
+
+?></pre>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="php" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">&lt;!DOCTYPE html>
+&lt;!-- 
+index.php
+-->
+&lt;html lang="en">
+&lt;head>
+&lt;link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+&lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">&lt;/script>
+&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js">&lt;/script>
+&lt;script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js">&lt;/script>
+    &lt;meta charset="UTF-8">
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0">
+    &lt;title>Captura de Datos MySQLi&lt;/title>
+    &lt;link rel = "stylesheet" href = "estilos.css"> 
+
+
+&lt;/head>
+&lt;body>
+    
+&lt;form action = "index.php" method = "post">
+&lt;dvi class="container h-100">
+	&lt;div class="d-flex justify-content-center">
+		&lt;div class="card mt-5 col-md-4 animated bounceInDown myForm">
+			&lt;div class="card-header">
+				&lt;h4>Insertar Datos MySQLi&lt;/h4>
+			&lt;/div>
+			&lt;div class="card-body">
+				&lt;form>
+					&lt;div id="dynamic_container">
+						&lt;div class="input-group">
+							&lt;div class="input-group-prepend">
+								&lt;span class="input-group-text br-15">&lt;i class="fas fa-user-graduate">&lt;/i>&lt;/span>
+							&lt;/div>
+							&lt;input type="text" name = 'nombre' placeholder="Nombre" class="form-control"/>
+						&lt;/div>
+						&lt;div class="input-group mt-3">
+							&lt;div class="input-group-prepend">
+								&lt;span class="input-group-text br-15">&lt;i class="fas fa-phon_e-square">&lt;/i>&lt;/span>
+							&lt;/div>
+							&lt;input type="email" name = 'correo' placeholder="Email" class="form-control"/>
+						&lt;/div>
+						&lt;div class="input-group mt-3">
+							&lt;div class="input-group-prepend">
+								&lt;span class="input-group-text br-15">&lt;i class="fas fa-at">&lt;/i>&lt;/span>
+							&lt;/div>
+							&lt;input type="number" name = 'edad' placeholder="Edad" class="form-control"/>
+						&lt;/div>
+					&lt;/div>
+				&lt;/form>
+			&lt;/div>
+			&lt;div class="card-footer">
+				&lt;a class="btn btn-secondary btn-sm" id="add_more">&lt;i class="fas fa-plus-circle">&lt;/i> Add&lt;/a>
+				&lt;a class="btn btn-secondary btn-sm" id="remove_more">&lt;i class="fas fa-trash-alt">&lt;/i> Remove&lt;/a>
+				&lt;button class="btn btn-success btn-sm float-right submit_btn" name = 'submit'>&lt;i class="fas fa-arrow-alt-circle-right">&lt;/i> Submit&lt;/button>
+			&lt;/div>
+		&lt;/div>
+	&lt;/div>
+	&lt;/dvi>
+&lt;/form>
+&lt;?php
+//index.php
+include 'conexion.php';
+include 'insertar.php';
+
+//variables con datos a insertar
+if(isset($_POST['submit'])){
+    $nombre = $_POST['nombre'];
+    $correo = $_POST['correo'];
+    $edad = $_POST['edad'];
+
+    insertarDatos($nombre, $correo, $edad, $conn);
+
+    $conn = null;
+}
+
+
+
+
+
+?></pre>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="php" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">
+&lt;?php
+// insertar.php
+function insertarDatos ($nombre,$correo,$edad,$conn){
+    $sql = "INSERT INTO usuarios (nombre, correo, edad) VALUES (?,?,?)";
+    $stmt = $conn -> prepare($sql);
+
+    if($stmt){
+        $stmt -> bind_param("ssi",$nombre,$correo, $edad);
+        if($stmt -> execute()){
+            echo "Datos insertados correctamente.";
+        }else{
+            echo "Error al insertar datos:" . $stmt->error;
+        }
+        $stmt -> close();
+    }else{
+        echo "Error en la preparación de la consulta:". $conn->error;
+    }
+}
+
+
+
+?>
+</pre>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="css" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">	html,body{
+			height: 100%;
+			margin: 0;
+			background: rgb(2,0,36);
+            background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgb(2, 207, 253) 0%, rgb(251, 57, 212) 96%);
+            
+		}
+   
+   .myForm{
+   	background-color: rgba(0,0,0,0.5) !important;
+   	padding: 15px !important;
+   border-radius: 15px !important;
+   color: white;
+   
+   }
+
+   input{
+   	border-radius:0 15px 15px 0 !important;
+
+   }
+   input:focus{
+       outline: none;
+box-shadow:none !important;
+border:1px solid #ccc !important;
+
+   }
+
+   .br-15{
+   	border-radius: 15px 0 0 15px !important;
+   }
+
+   #add_more{
+   	color: white !important;
+   	background-color: #fd20ea !important;
+   	border-radius: 15px !important;
+   	border: 0 !important;
+
+   }
+   #remove_more{
+   	color: white !important;
+   	background-color: #fc5c65 !important;
+   	border-radius: 15px !important;
+   	border: 0 !important;
+   	display: none;
+
+   }
+   	
+   .submit_btn{
+   	border-radius: 15px !important;
+    background-color: #00ccff !important;
+    border: 0 !important;
+   }</pre>
+]]></content:encoded>
+					
+					<wfw:commentRss>C:/laragon/www/LinkUp/2024/12/02/hola-mundo/feed/</wfw:commentRss>
+			<slash:comments>1</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>
